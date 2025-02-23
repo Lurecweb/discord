@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Moderator Application</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #071A30;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background: #0D2A50;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 550px;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+            overflow-y: auto;
+            max-height: 90vh;
+        }
+
+        .logo {
+            width: 120px;
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            color: #008CFF;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 6px;
+            background: #10376A;
+            color: white;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: 2px solid #008CFF;
+        }
+
+        button {
+            background: #008CFF;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #0073CC;
+            transform: scale(1.05);
+        }
+
+        .success {
+            background: #105F94;
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            display: none;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                align-items: flex-start;
+                height: auto;
+            }
+            .container {
+                width: 95%;
+                padding: 20px;
+                max-height: none;
+                overflow-y: visible;
+            }
+            .logo {
+                width: 90px;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="lurec.png" alt="Server Logo" class="logo">
+        <h2>Discord Moderator Application</h2>
+
+        <div id="successMsg" class="success">✅ Application submitted successfully!</div>
+
+        <form id="modForm">
+            <label for="username">Discord Username:</label>
+            <input type="text" id="username" placeholder="Example#1234" required>
+
+            <label for="age">Your Age:</label>
+            <input type="number" id="age" placeholder="18" required>
+
+            <label for="timezone">Your Timezone:</label>
+            <input type="text" id="timezone" placeholder="e.g., EST, GMT+2" required>
+
+            <label for="experience">Do you have previous moderation experience?</label>
+            <select id="experience" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="expDetails">If yes, describe your experience:</label>
+            <textarea id="expDetails" placeholder="Explain your past roles"></textarea>
+
+            <label for="reason">Why do you want to be a moderator?</label>
+            <textarea id="reason" placeholder="Explain why you’d be a good fit" required></textarea>
+
+            <label for="conflict">How would you handle a conflict between two users?</label>
+            <textarea id="conflict" placeholder="Explain your approach" required></textarea>
+
+            <label for="availability">How often can you moderate?</label>
+            <select id="availability" required>
+                <option value="A few hours per week">A few hours per week</option>
+                <option value="1-2 hours per day">1-2 hours per day</option>
+                <option value="3+ hours per day">3+ hours per day</option>
+            </select>
+
+            <button type="submit">Submit Application</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("modForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const webhookURL = "https://discord.com/api/webhooks/1343077091893051443/eygjeLqbs0Kj73RVXIVK0kM6DPFrZOmKYuHC46G4yYbdaXBU07gGKouW9D5GsmEvhoUp";  
+
+            const username = document.getElementById("username").value;
+            const age = document.getElementById("age").value;
+            const timezone = document.getElementById("timezone").value;
+            const experience = document.getElementById("experience").value;
+            const expDetails = document.getElementById("expDetails").value || "N/A";
+            const reason = document.getElementById("reason").value;
+            const conflict = document.getElementById("conflict").value;
+            const availability = document.getElementById("availability").value;
+
+            const data = {
+                content: `📩 **New Mod Application**\n
+                👤 **Username:** ${username}\n
+                🎂 **Age:** ${age}\n
+                🌍 **Timezone:** ${timezone}\n
+                🔹 **Experience:** ${experience}\n
+                📜 **Experience Details:** ${expDetails}\n
+                📝 **Reason:** ${reason}\n
+                ⚖️ **Conflict Resolution:** ${conflict}\n
+                ⏳ **Availability:** ${availability}`
+            };
+
+            fetch(webhookURL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById("modForm").reset();
+                    document.getElementById("successMsg").style.display = "block";
+                    setTimeout(() => {
+                        document.getElementById("successMsg").style.display = "none";
+                    }, 5000);
+                } else {
+                    alert("Error submitting application. Please try again.");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Error submitting application.");
+            });
+        });
+    </script>
+
+</body>
+</html>
