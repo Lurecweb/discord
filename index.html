@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Discord Moderator Application</title>
     <style>
+        /* General Styles */
         body {
             font-family: 'Arial', sans-serif;
-            background: #071A30;
-            color: white;
+            background: #0d0d0d; /* True dark background */
+            color: #d1d1d1;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -18,78 +19,123 @@
         }
 
         .container {
-            background: #0D2A50;
+            background: #181818;
             padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.5);
+            border-radius: 16px;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.6);
             width: 100%;
-            max-width: 550px;
+            max-width: 600px;
             text-align: center;
             animation: fadeIn 1s ease-in-out;
             overflow-y: auto;
             max-height: 90vh;
+            backdrop-filter: blur(6px);
         }
 
         .logo {
-            width: 120px;
-            margin-bottom: 15px;
+            width: 150px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0px 4px 12px #1686fd80);
         }
 
         h2 {
-            color: #008CFF;
-            margin-bottom: 20px;
-            font-size: 24px;
+            color: hsl(199, 85%, 51%);
+            margin-bottom: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            text-shadow: 0px 2px 6px rgba(0, 0, 0, 0.4);
         }
 
         label {
             display: block;
             text-align: left;
-            margin: 10px 0 5px;
+            margin: 12px 0 6px;
             font-weight: bold;
+            font-size: 15px;
+            color: #b3b3b3;
+        }
+
+        .requirements {
+            background: rgba(40, 40, 40, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: left;
+            font-size: 15px;
+            color: #d1d1d1;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .requirements h3 {
+            color: rgb(92, 176, 232);
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 20px;
+            text-shadow: 0px 2px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        .requirements ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .requirements li {
+            margin: 5px 0;
+            padding-left: 10px;
             font-size: 14px;
         }
 
+
         input, textarea, select {
             width: 100%;
-            padding: 14px;
-            margin-bottom: 15px;
+            padding: 12px;
+            margin-bottom: 12px;
             border: none;
-            border-radius: 6px;
-            background: #10376A;
-            color: white;
-            font-size: 16px;
+            border-radius: 8px;
+            background: #252525;
+            color: #ffffff;
+            font-size: 15px;
             transition: 0.3s;
+            box-shadow: inset 0px 3px 6px rgba(0, 0, 0, 0.2);
         }
 
         input:focus, textarea:focus, select:focus {
-            outline: 2px solid #008CFF;
+            outline: 2px solid hsl(206, 84%, 41%);
+            background: #2e2e2e;
         }
 
         button {
-            background: #008CFF;
+            background: hwb(213 4% 24%);
             color: white;
             padding: 14px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 18px;
             cursor: pointer;
             transition: 0.3s;
             width: 100%;
             font-weight: bold;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
         }
 
         button:hover {
-            background: #0073CC;
-            transform: scale(1.05);
+            background: #495ab2;
+            transform: scale(1.02);
         }
 
         .success {
-            background: #105F94;
+            background: rgba(13, 169, 217, 0.9);
             color: white;
             padding: 12px;
-            border-radius: 6px;
+            border-radius: 8px;
             display: none;
             margin-top: 15px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @media (max-width: 600px) {
@@ -104,13 +150,8 @@
                 overflow-y: visible;
             }
             .logo {
-                width: 90px;
+                width: 130px;
             }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -120,11 +161,22 @@
         <img src="lurec.png" alt="Server Logo" class="logo">
         <h2>Discord Moderator Application</h2>
 
+        <div class="requirements">
+            <h3>Requirements</h3>
+            <ul>
+                <li>🔹 Must be at least 16 years old.</li>
+                <li>🔹 Must have a working microphone.</li>
+                <li>🔹 Must be active in the community.</li>
+                <li>🔹 Must have prior moderation experience (preferred).</li>
+                <li>🔹 Must handle conflicts maturely and professionally.</li>
+            </ul>
+        </div>
+
         <div id="successMsg" class="success">✅ Application submitted successfully!</div>
 
         <form id="modForm">
             <label for="username">Discord Username:</label>
-            <input type="text" id="username" placeholder="Example#1234" required>
+            <input type="text" id="username" placeholder="@example" required>
 
             <label for="age">Your Age:</label>
             <input type="number" id="age" placeholder="18" required>
@@ -147,6 +199,15 @@
             <label for="conflict">How would you handle a conflict between two users?</label>
             <textarea id="conflict" placeholder="Explain your approach" required></textarea>
 
+            <label for="ruleBreaker">How would you handle a user breaking the rules?</label>
+            <textarea id="ruleBreaker" placeholder="Describe your actions" required></textarea>
+
+            <label for="teamwork">How well do you work in a team?</label>
+            <textarea id="teamwork" placeholder="Describe a time you worked in a team" required></textarea>
+
+            <label for="situation">A member is being toxic but not directly breaking rules. What do you do?</label>
+            <textarea id="situation" placeholder="Explain your response" required></textarea>
+
             <label for="availability">How often can you moderate?</label>
             <select id="availability" required>
                 <option value="A few hours per week">A few hours per week</option>
@@ -160,52 +221,64 @@
 
     <script>
         document.getElementById("modForm").addEventListener("submit", function(event) {
-            event.preventDefault();
+    event.preventDefault();
 
-            const webhookURL = "https://discord.com/api/webhooks/1343077091893051443/eygjeLqbs0Kj73RVXIVK0kM6DPFrZOmKYuHC46G4yYbdaXBU07gGKouW9D5GsmEvhoUp";  
+    const webhookURL = "https://discord.com/api/webhooks/1343077091893051443/eygjeLqbs0Kj73RVXIVK0kM6DPFrZOmKYuHC46G4yYbdaXBU07gGKouW9D5GsmEvhoUp";
+    const username = document.getElementById("username").value;
+    const age = document.getElementById("age").value;
+    const timezone = document.getElementById("timezone").value;
+    const experience = document.getElementById("experience").value;
+    const expDetails = document.getElementById("expDetails").value || "*No details provided*";
+    const reason = document.getElementById("reason").value;
+    const conflict = document.getElementById("conflict").value;
+    const ruleBreaker = document.getElementById("ruleBreaker").value;
+    const teamwork = document.getElementById("teamwork").value;
+    const situation = document.getElementById("situation").value;
+    const availability = document.getElementById("availability").value;
 
-            const username = document.getElementById("username").value;
-            const age = document.getElementById("age").value;
-            const timezone = document.getElementById("timezone").value;
-            const experience = document.getElementById("experience").value;
-            const expDetails = document.getElementById("expDetails").value || "N/A";
-            const reason = document.getElementById("reason").value;
-            const conflict = document.getElementById("conflict").value;
-            const availability = document.getElementById("availability").value;
+    const message = {
+        username: "Lurec DC",
+        avatar_url: "https://cdn.discordapp.com/attachments/1174938185869045790/1341535478037348383/IMG_7260.png?ex=67c2e006&is=67c18e86&hm=e11f5c1af1cfef24a397fead46bb6da2697c8042de283a1ab11adc2efe703dea&", 
+        embeds: [{
+            title: "📝 DC Moderator Application",
+            description: `A new DC moderator application has been submitted!`,
+            color: 0x87CEEB, 
+            fields: [
+                { name: "👤 **Username**", value: username, inline: true },
+                { name: "🎂 **Age**", value: age, inline: true },
+                { name: "🌍 **Timezone**", value: timezone, inline: true },
+                { name: "🛠 **Experience**", value: experience, inline: true },
+                { name: "📜 **Experience Details**", value: expDetails, inline: false },
+                { name: "🤔 **Why do they want to be a mod?**", value: reason, inline: false },
+                { name: "⚖ **Handling Conflicts**", value: conflict, inline: false },
+                { name: "🚨 **Handling Rule Breakers**", value: ruleBreaker, inline: false },
+                { name: "🤝 **Teamwork Experience**", value: teamwork, inline: false },
+                { name: "😡 **Dealing with Toxic Users**", value: situation, inline: false },
+                { name: "⏳ **Availability**", value: availability, inline: true }
+            ],
+            footer: { text: "Submitted via Mod Application Form 📩", icon_url: "https://cdn.discordapp.com/attachments/1174938185869045790/1341535478037348383/IMG_7260.png?ex=67c2e006&is=67c18e86&hm=e11f5c1af1cfef24a397fead46bb6da2697c8042de283a1ab11adc2efe703dea&" },
+            timestamp: new Date().toISOString()
+        }]
+    };
 
-            const data = {
-                content: `📩 **New Mod Application**\n
-                👤 **Username:** ${username}\n
-                🎂 **Age:** ${age}\n
-                🌍 **Timezone:** ${timezone}\n
-                🔹 **Experience:** ${experience}\n
-                📜 **Experience Details:** ${expDetails}\n
-                📝 **Reason:** ${reason}\n
-                ⚖️ **Conflict Resolution:** ${conflict}\n
-                ⏳ **Availability:** ${availability}`
-            };
+    fetch(webhookURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(message)
+    }).then(response => {
+        if (response.ok) {
+            document.getElementById("modForm").reset();
+            document.getElementById("successMsg").style.display = "block";
+            setTimeout(() => { document.getElementById("successMsg").style.display = "none"; }, 5000);
+        } else {
+            alert("❌ Error submitting application. Please try again.");
+        }
+    }).catch(error => {
+        console.error("Error:", error);
+        alert("❌ There was an error submitting your application.");
+    });
+});
 
-            fetch(webhookURL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data)
-            })
-            .then(response => {
-                if (response.ok) {
-                    document.getElementById("modForm").reset();
-                    document.getElementById("successMsg").style.display = "block";
-                    setTimeout(() => {
-                        document.getElementById("successMsg").style.display = "none";
-                    }, 5000);
-                } else {
-                    alert("Error submitting application. Please try again.");
-                }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                alert("Error submitting application.");
-            });
-        });
     </script>
 
 </body>
